@@ -1,0 +1,48 @@
+.Root {
+  position: relative;
+}
+
+.Input {
+  position: relative;
+
+  input {
+    cursor: pointer;
+
+    &:focus {
+      border: 2px solid #e3e4e9;
+    }
+  }
+
+  .Arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    cursor: pointer;
+  }
+}
+
+.Dropdown {
+  padding: 4px;
+
+  position: absolute;
+  left: 0;
+
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  z-index: 100;
+  
+  li {
+    padding: 10px;
+    
+    
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      outline: 1px solid #e3e4e9;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.Root {
+  margin: 0 auto;
+  
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  max-width: 500px;
+  width: 100%;
+
+  & > * {
+    margin-top: 20px;
+  }
+}

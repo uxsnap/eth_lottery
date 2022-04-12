@@ -21,8 +21,7 @@ contract Lottery is Ownable {
         uint256 value;
     }
 
-    mapping(uint16 => Player) public participants;
-    mapping(address => string) public participantsNames;
+    mapping(address => string) public participants;
 
     event Transfer(address _from, uint256 _value);
 
@@ -45,14 +44,13 @@ contract Lottery is Ownable {
         );
         require(msg.value >= minFee, "Need more ETH to access Lottery");
         require(
-            bytes(participantsNames[msg.sender]).length == 0,
+            bytes(participants[msg.sender]).length == 0,
             "You can't participate more than once in the lottery"
         );
 
         currentValue += msg.value;
 
-        participantsNames[msg.sender] = name;
-        participants[participantCount] = Player(name, msg.sender, msg.value);
+        participants[msg.sender] = name;
         participantCount++;
 
         emit Transfer(msg.sender, msg.value);

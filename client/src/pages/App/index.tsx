@@ -2,27 +2,24 @@ import React, { FC, useEffect, useState } from "react";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 
-import LotteryContract from "./contracts/Lottery.json";
-import getWeb3 from "./getWeb3";
+import { Header } from "../../components";
+import LotteryContract from "../../contracts/Lottery.json";
+import getWeb3 from "../../getWeb3";
+import { Converter } from "../Converter";
+import { Lottery } from "../Lottery";
+
+import styles from './App.module.scss';
 
 const App: FC = () => {
   const [web3, setWeb3] = useState<Web3>();
   const [accounts, setAccounts] = useState<string[]>();
   const [contract, setContract] = useState<Contract>();
 
+  const [pageType, setPageType] = useState('converter');
+
   useEffect(() => {
     onMount();
   }, []);
-
-  const handleClick = async () => {
-    const res = await contract?.methods.isOpen().call();
-    console.log(res);
-  };
-
-  const handleChangeOpen = async () => {
-    const res = await contract?.methods.setIsOpen(true).send({ from: accounts?.[0] });
-    console.log(res);
-  };
 
   const onMount = async () => {
     try {
@@ -63,10 +60,27 @@ const App: FC = () => {
     return <div>Loading Web3, accounts, and contract...</div>;
   }
 
+  const renderPageByPageType = (pageType: string) => {
+    switch (pageType) {
+      case 'lottery':
+        return <Lottery />
+      case 'converter':
+        return <Converter />
+      default:
+        return '';
+    }
+  };
+
   return (
-    <div className="App">
-      <button onClick={handleClick}>Click</button>
-      <button onClick={handleChangeOpen}>Change open</button>
+    <div className={styles.Root}>
+      <div className={styles.Header}>
+        <Header onClick={() => setPageType('lottery')}>Lottery</Header>
+
+        <Header onClick={() => setPageType('converter')}>Converter</Header>
+      </div>
+
+      {renderPageByPageType(pageType)}
+
     </div >
   );
 }

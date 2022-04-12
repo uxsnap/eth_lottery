@@ -1,0 +1,30 @@
+.Root {  
+  width: 100%;
+}
+
+
+.Label {
+  margin-bottom: 3px;
+  margin-left: 9px;
+
+  color: #011502;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.Input {
+  input {
+    padding: 10px 20px;
+    
+    width: 100%;
+    font-size: 24px;
+    border-radius: 5px;
+    border: 2px solid #e3e4e9;
+
+    &:focus {
+      border-color: darken(#e3e4e9, 30);
+      transition: all .8s;
+      outline: none;
+    }
+  }
+}

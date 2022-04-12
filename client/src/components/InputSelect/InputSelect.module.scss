@@ -1,0 +1,14 @@
+.Root {
+  display: flex;
+  align-items: flex-end;
+
+  & > div {
+    &:first-child {
+      flex-basis: 100%;
+    }
+
+    &:last-child {
+      flex-basis: 40%;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+$lightGrey: rgba(0, 0, 0, 0.4) !default;
+$secondaryColor: white !default;
+$mainColor: #32746D !default;
+
+.Root {
+  padding: 20px;
+  
+  width: 100%;
+  cursor: pointer;
+  color: $secondaryColor;
+  font-size: 20px;
+  border: 0;
+  background-color: $mainColor;
+  border-radius: 8px;
+  
+  &:focus {
+    outline: 0
+  }
+
+  &:active {
+    box-shadow: inset 0 0 5px $lightGrey
+  }
+}
