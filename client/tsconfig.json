@@ -17,6 +17,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": true,
+    "strictPropertyInitialization": false,
     "jsx": "react"
   },
   "include": [
