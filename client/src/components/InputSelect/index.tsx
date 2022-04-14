@@ -11,12 +11,12 @@ interface InputSelectProps {
   mask?: (value: string) => any;
 }
 
-export const InputSelect = ({ label, mask, options, onChange, value }: any) => {
+export const InputSelect = ({ label, mask, options, onChange, onSelect, selectValue, value }: any) => {
   return (
     <div className={styles.Root}>
       <Input onChange={onChange} value={value} label={label} mask={mask} />
 
-      <Select onChange={() => false} options={options} />
+      <Select value={selectValue.label} onChange={onSelect} options={options} />
     </div>
   );
 };  

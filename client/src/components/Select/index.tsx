@@ -8,14 +8,15 @@ import styles from './Select.module.scss';
 interface SelectProps {
   options: any[];
   onChange: (value: string) => void;
+  value: string;
 }
 
-export const Select = ({ options = [], onChange }: SelectProps) => {
+export const Select = ({ options = [], onChange, value }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLUListElement>(null);
 
   const handleChange = (option: any) => {
-    onChange && onChange(option.value);
+    onChange && onChange(option);
     setIsOpen(false);
   };
 
@@ -24,7 +25,7 @@ export const Select = ({ options = [], onChange }: SelectProps) => {
   return (
     <div className={styles.Root}>
       <div onClick={() => setIsOpen(!isOpen)} className={styles.Input}>
-        <Input readOnly />
+        <Input value={value} readOnly />
 
         <div className={styles.Arrow}>
           <Icon iconType='angle-down' />
@@ -34,7 +35,7 @@ export const Select = ({ options = [], onChange }: SelectProps) => {
       {isOpen && (
         <ul ref={dropdownRef} className={styles.Dropdown}>
           {options.map((option: any) => (
-            <li onClick={() => handleChange(option.value)} key={option.value}>{option.label}</li>
+            <li onClick={() => handleChange(option)} key={option.value}>{option.label}</li>
           ))}
         </ul>
       )}
