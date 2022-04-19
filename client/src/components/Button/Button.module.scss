@@ -3,9 +3,9 @@ $secondaryColor: white !default;
 $mainColor: #32746D !default;
 
 .Root {
-  padding: 20px;
+  padding: 10px;
   
-  width: 100%;
+  width: auto;
   cursor: pointer;
   color: $secondaryColor;
   font-size: 20px;

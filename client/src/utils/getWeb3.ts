@@ -3,23 +3,22 @@ import Web3 from "web3";
 
 const getWeb3 = (): Promise<any> =>
   new Promise((resolve, reject) => {
-    const currentWindow: any = window;
 
-    currentWindow.addEventListener("load", async () => {
-      if (currentWindow.ethereum) {
-        const web3 = new Web3(currentWindow.ethereum);
-        const provider = new ethers.providers.Web3Provider(currentWindow.ethereum);
+    window.addEventListener("load", async () => {
+      if (window.ethereum) {
+        const web3 = new Web3(window.ethereum);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
 
         try {
-          await currentWindow.ethereum.enable();
+          await window.ethereum.enable();
           resolve({ web3, provider });
         } catch (error) {
           reject(error);
         }
       }
 
-      else if (currentWindow.web3) {
-        const web3 = currentWindow.web3;
+      else if (window.web3) {
+        const web3 = window.web3;
 
         console.log("Injected web3 detected.");
         resolve(web3);

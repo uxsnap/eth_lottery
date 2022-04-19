@@ -2,7 +2,6 @@
   width: 100%;
 }
 
-
 .Label {
   margin-bottom: 3px;
   margin-left: 9px;
@@ -13,17 +12,34 @@
 }
 
 .Input {
+  display: flex;
+  align-items: center;
+
+  background: white;
+  border-radius: 5px;
+  border: 2px solid #e3e4e9;
+
+  &.withPrefix {
+    .Prefix {
+      padding: 0 6px;
+    }
+
+    input {
+      padding-left: 0;
+    }
+  }
+
   input {
     padding: 10px 20px;
-    
+
     width: 100%;
     font-size: 24px;
     border-radius: 5px;
-    border: 2px solid #e3e4e9;
+    background: transparent;
+    border: none;
 
     &:focus {
-      border-color: darken(#e3e4e9, 30);
-      transition: all .8s;
+      border: none;
       outline: none;
     }
   }

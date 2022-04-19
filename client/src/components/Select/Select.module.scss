@@ -4,13 +4,10 @@
 
 .Input {
   position: relative;
-
+  cursor: pointer;
+  
   input {
     cursor: pointer;
-
-    &:focus {
-      border: 2px solid #e3e4e9;
-    }
   }
 
   .Arrow {
@@ -36,13 +33,23 @@
   
   li {
     padding: 10px;
-    
+
+    display: flex;
+    align-items: center;
     
     border-radius: 4px;
     cursor: pointer;
 
     &:hover {
       outline: 1px solid #e3e4e9;
+    }
+  }
+
+  .Icon {
+    margin-right: 8px;
+  
+    span {
+      color: #6A8D73;
     }
   }
 }

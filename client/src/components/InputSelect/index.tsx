@@ -5,18 +5,20 @@ import { Select } from '../Select';
 
 import styles from './InputSelect.module.scss';
 
-interface InputSelectProps {
+interface InputSelectProps extends Record<any, any> {
   label: string;
-  options: any[];
+  options: { label: string; value: string; icon: ReactNode; }[];
   mask?: (value: string) => any;
 }
 
-export const InputSelect = ({ label, mask, options, onChange, onSelect, selectValue, value }: any) => {
+export const InputSelect = ({ label, mask, options, onChange, onSelect, selectValue, value }: InputSelectProps) => {
   return (
     <div className={styles.Root}>
       <Input onChange={onChange} value={value} label={label} mask={mask} />
 
-      <Select value={selectValue.label} onChange={onSelect} options={options} />
+      <div className={styles.Select}>
+        <Select value={selectValue} onChange={onSelect} options={options} />
+      </div>
     </div>
   );
 };  

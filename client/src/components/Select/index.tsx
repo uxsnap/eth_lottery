@@ -6,9 +6,9 @@ import { useOutsideClick } from '../../utils/hooks';
 import styles from './Select.module.scss';
 
 interface SelectProps {
-  options: any[];
+  options: { label: string; value: string; icon: ReactNode; }[];
   onChange: (value: string) => void;
-  value: string;
+  value: { label: string; value: string; icon: ReactNode; };
 }
 
 export const Select = ({ options = [], onChange, value }: SelectProps) => {
@@ -25,7 +25,7 @@ export const Select = ({ options = [], onChange, value }: SelectProps) => {
   return (
     <div className={styles.Root}>
       <div onClick={() => setIsOpen(!isOpen)} className={styles.Input}>
-        <Input value={value} readOnly />
+        <Input prefix={value.icon} value={value.label} readOnly />
 
         <div className={styles.Arrow}>
           <Icon iconType='angle-down' />
@@ -34,8 +34,11 @@ export const Select = ({ options = [], onChange, value }: SelectProps) => {
 
       {isOpen && (
         <ul ref={dropdownRef} className={styles.Dropdown}>
-          {options.map((option: any) => (
-            <li onClick={() => handleChange(option)} key={option.value}>{option.label}</li>
+          {options.map((option) => (
+            <li onClick={() => handleChange(option)} key={option.value}>
+              <div className={styles.Icon}>{option.icon}</div>
+              <div className={styles.Label}>{option.label}</div>
+            </li>
           ))}
         </ul>
       )}

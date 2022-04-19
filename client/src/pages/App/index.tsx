@@ -1,13 +1,10 @@
 import { ethers } from "ethers";
 import { observer } from "mobx-react-lite";
-import React, { FC, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Web3 from "web3";
-import { Contract } from "web3-eth-contract";
-import { AbiItem } from 'web3-utils';
-import NuxTokenContract from "../../contracts/NuxToken.json"
 
 import { Header } from "../../components";
-import { web3Store } from "../../mobxStore/Web3Store";
+import { Web3Context } from "../../mobxStore/Web3Store";
 import getWeb3 from "../../utils/getWeb3";
 import { Converter } from "../Converter";
 import { Lottery } from "../Lottery";
@@ -15,11 +12,21 @@ import { Lottery } from "../Lottery";
 import styles from './App.module.scss';
 
 const App = observer(() => {
+  const web3Store = useContext(Web3Context);
   const [pageType, setPageType] = useState('converter');
 
   useEffect(() => {
     onMount();
-  }, []);
+
+    window.ethereum.on('chainChanged', () => {
+      window.location.reload();
+    });
+
+    window.ethereum.on('accountsChanged', () => {
+      window.location.reload();
+    });
+  });
+
 
   const onMount = async () => {
     try {
@@ -32,12 +39,6 @@ const App = observer(() => {
 
       const signer = provider.getSigner();
 
-      // @ts-ignore
-      const deployedNetwork: { address: string } = NuxTokenContract.networks[networkId];
-
-      const erc20 = new ethers.Contract(deployedNetwork.address, NuxTokenContract.abi, signer);
-
-      web3Store.setErc20(erc20);
       web3Store.setSigner(signer);
       web3Store.setWeb3(web3);
       web3Store.setAccounts(accounts);
