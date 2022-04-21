@@ -3,11 +3,11 @@ import cn from 'classnames';
 
 import styles from './Input.module.scss';
 
-export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> {
   mask?: (value: string) => string;
   label?: string;
   value?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (value: string) => void;
   name?: string;
   type?: string;
   error?: string;
@@ -24,16 +24,24 @@ export const Input: FC<InputProps> = ({
   error = '',
   prefix = '',
   ...inputProps
-}) => (
-  <label className={styles.Root} htmlFor={name}>
-    <div className={styles.Label}>{label}</div>
+}) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const curValue = mask ? mask(e.target.value) : e.target.value;
 
-    <div className={cn(styles.Input, prefix && styles.withPrefix)}>
-      {prefix && <div className={styles.Prefix}>{prefix}</div>}
+    onChange && onChange(curValue);
+  };
 
-      <input value={mask ? mask(value) : value} onChange={onChange} type={type} {...inputProps} />
-    </div>
+  return (
+    <label className={styles.Root} htmlFor={name}>
+      <div className={styles.Label}>{label}</div>
 
-    {error && <div className={styles.Error}>{error}</div>}
-  </label>
-);
+      <div className={cn(styles.Input, prefix && styles.withPrefix)}>
+        {prefix && <div className={styles.Prefix}>{prefix}</div>}
+
+        <input value={mask ? mask(value) : value} onChange={handleChange} type={type} {...inputProps} />
+      </div>
+
+      {error && <div className={styles.Error}>{error}</div>}
+    </label>
+  );
+};

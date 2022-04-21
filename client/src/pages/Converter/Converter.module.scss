@@ -9,6 +9,14 @@
   width: 100%;
 }
 
+.Balances {
+  & > div {
+    &:last-child {
+      margin-top: 20px;
+    }
+  }
+}
+
 .Balance {
   & > div {
     text-align: center; 
