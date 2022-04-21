@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 
 import styles from './Button.module.scss';
 
@@ -7,7 +7,7 @@ export interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button = ({ children, onClick }: ButtonProps) => (
+export const Button: FC<ButtonProps> = ({ children, onClick }) => (
   <button className={styles.Root} onClick={onClick}>
     {children}
   </button>

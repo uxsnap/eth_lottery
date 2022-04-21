@@ -2,44 +2,44 @@ import { observer } from "mobx-react"
 import { AbiItem } from 'web3-utils'
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Erc20Context, Web3Context } from "../../mobxStore";
+import { NuxTokenContractStoreContext, Web3Context } from "../../mobxStore";
 import NuxTokenContract from "../../contracts/NuxToken.json"
 import { TokenInputSelect } from "./TokenInputSelect";
+import { Icon } from "../../components";
+import { ContractNetwork, ContractNetworkId } from "../../types";
 
 import styles from './Converter.module.scss';
-import { Icon } from "../../components";
 
 export const Converter = observer(() => {
   const [curAmount, setCurAmount] = useState('');
 
-  const { erc20: curErc20, setErc20 } = useContext(Erc20Context);
+  const { nuxTokenContract: curNuxTokenContract, setNuxTokenContract } = useContext(NuxTokenContractStoreContext);
   const { web3, networkId, accounts } = useContext(Web3Context);
 
   useEffect(() => {
     if (!networkId) return;
 
-    // @ts-ignore
-    const deployedNetwork: { address: string } = NuxTokenContract.networks[networkId];
+    const deployedNetwork: { address: string } = (NuxTokenContract as ContractNetwork).networks[networkId as ContractNetworkId];
 
-    const erc20 = new web3.eth.Contract(
+    const nuxTokenContract = new web3.eth.Contract(
       NuxTokenContract.abi as AbiItem[],
       deployedNetwork.address
     );
 
-    setErc20(erc20);
+    setNuxTokenContract(nuxTokenContract);
 
   }, [web3, networkId]);
 
   useEffect(() => {
-    if (!curErc20) return;
+    if (!curNuxTokenContract) return;
 
     getBalance();
-  }, [curErc20]);
+  }, [curNuxTokenContract]);
 
   const getBalance = async () => {
     const address = accounts[0];
 
-    const amount = await curErc20.methods.balanceOf(address).call();
+    const amount = await curNuxTokenContract.methods.balanceOf(address).call();
     setCurAmount(amount.toString());
   };
 
@@ -50,10 +50,10 @@ export const Converter = observer(() => {
   return (
     <div className={styles.Root}>
       <div className={styles.Balance}>
-        <div>Current CUR token amount:</div>
+        <div>Current NXT token amount:</div>
 
         <div>
-          <Icon iconType='dollar-sign-solid' />
+          <Icon iconType='cake' />
           <span>{curAmount}</span>
         </div>
       </div>

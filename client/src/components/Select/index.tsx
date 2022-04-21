@@ -1,22 +1,23 @@
 import React, { ReactNode, useRef, useState } from 'react';
 
 import { Icon, Input } from '..';
+import { SelectOption } from '../../types';
 import { useOutsideClick } from '../../utils/hooks';
 
 import styles from './Select.module.scss';
 
-interface SelectProps {
-  options: { label: string; value: string; icon: ReactNode; }[];
-  onChange: (value: string) => void;
-  value: { label: string; value: string; icon: ReactNode; };
+export interface SelectProps {
+  options: SelectOption[];
+  onChangeSelect: (value: SelectOption) => void;
+  selected: SelectOption;
 }
 
-export const Select = ({ options = [], onChange, value }: SelectProps) => {
+export const Select = ({ options = [], onChangeSelect, selected }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLUListElement>(null);
 
   const handleChange = (option: any) => {
-    onChange && onChange(option);
+    onChangeSelect && onChangeSelect(option);
     setIsOpen(false);
   };
 
@@ -25,7 +26,7 @@ export const Select = ({ options = [], onChange, value }: SelectProps) => {
   return (
     <div className={styles.Root}>
       <div onClick={() => setIsOpen(!isOpen)} className={styles.Input}>
-        <Input prefix={value.icon} value={value.label} readOnly />
+        <Input prefix={selected.icon} value={selected.label} readOnly />
 
         <div className={styles.Arrow}>
           <Icon iconType='angle-down' />

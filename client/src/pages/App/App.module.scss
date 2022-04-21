@@ -5,14 +5,13 @@
 }
 
 .Header {
-  margin-top: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
   & > h1 {
     transition: all .8s;
+    font-weight: 700;
     
     &:first-child {
       &:hover {
@@ -21,7 +20,7 @@
     }
 
     &:last-child {
-      margin-left: 20px;
+      margin-left: 30px;
 
       &:hover{ 
         color: #94d2bd;
